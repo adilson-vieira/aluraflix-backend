@@ -54,7 +54,7 @@ public class VideoService {
 	public ResponseEntity<String> deletarVideo(Long id) {
 		try {
 				videoRepository.deleteById(id);
-				return new ResponseEntity<String>("video deletado com sucesso!", HttpStatus.OK);
+				return new ResponseEntity<String>("video excluído com sucesso!", HttpStatus.OK);
 		    }	
 		catch(Exception e) {
 				return new ResponseEntity<String>("Não concluído: " + e.getMessage(), HttpStatus.BAD_REQUEST);
