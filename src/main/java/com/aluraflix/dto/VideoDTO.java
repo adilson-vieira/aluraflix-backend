@@ -1,43 +1,42 @@
-package com.aluraflix.models;
+package com.aluraflix.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "videos")
-public class Video{	
+public class VideoDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long Id;
 	
+	@NotBlank(message = "o título do vídeo deve ser informado")
+	@Size(max = 255)
 	private String titulo;
 	
+	@NotBlank(message = "a descrição do vídeo deve ser informada" )
+	@Size(max = 255)
 	private String descricao;
 	
+	@NotBlank(message = "a url do video deve ser informada")
+	@Size(max = 300)
 	private String url;
-
-	public Video() {
+	
+	public VideoDTO() {
+	
 	}
 	
-	public Video(String titulo, String descricao, String url) {
-		super();
+	public VideoDTO(@NotBlank @Size(max = 255) String titulo, @NotBlank @Size(max = 255) String descricao,
+			@NotBlank @Size(max = 300) String url) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.url = url;
 	}
-
+	
 	public Long getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		Id = id;
 	}
 
 	public String getTitulo() {
@@ -64,4 +63,7 @@ public class Video{
 		this.url = url;
 	}
 	
-}	
+	
+	
+
+}

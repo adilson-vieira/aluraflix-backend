@@ -7,5 +7,6 @@ import com.aluraflix.models.Video;
 
 @Repository
 public interface VideoRepository extends JpaRepository<Video, Long>{
+	
 
 }

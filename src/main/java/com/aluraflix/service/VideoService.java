@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
+import com.aluraflix.dto.VideoDTO;
 import com.aluraflix.models.Video;
 import com.aluraflix.repository.VideoRepository;
 
@@ -19,47 +20,52 @@ public class VideoService {
 	private VideoRepository videoRepository;
 	
 	public ResponseEntity<List<Video>> buscarTodosOsVideos(){
-		return new ResponseEntity<List<Video>>(videoRepository.findAll(), HttpStatus.OK);		
+		return new ResponseEntity<List<Video>>(videoRepository.findAll(), HttpStatus.OK);				
 	}
 	
-	public ResponseEntity<Video> buscaVideoPorId(Long id) {
+	public ResponseEntity<VideoDTO> buscaVideoPorId(Long id) {
 		try {
-			  return new ResponseEntity<Video>(videoRepository.findById(id).get(), HttpStatus.OK); 
+			  Video video = videoRepository.findById(id).get();
+			  VideoDTO videoBuscado = new VideoDTO(video.getTitulo(), video.getTitulo(), video.getUrl());
+			  return new ResponseEntity<VideoDTO>(videoBuscado, HttpStatus.OK); 
 		}catch(Exception e) {
-			  return new ResponseEntity<Video>(new Video(), HttpStatus.BAD_REQUEST);
-		}
-		
+			  return new ResponseEntity<VideoDTO>(new VideoDTO(), HttpStatus.NOT_FOUND);
+		}		
 	}
 
-	public ResponseEntity<Video> cadastrarVideo(Video video) {
+	public ResponseEntity<VideoDTO> cadastrarVideo(VideoDTO videoDto) {
+		Video video = new Video(videoDto.getTitulo(), videoDto.getDescricao(), videoDto.getUrl());
 		try {
-				Long id = videoRepository.save(video).getId();
-				return new ResponseEntity<Video>(videoRepository.findById(id).get(), HttpStatus.OK);			
+				videoRepository.save(video);
+				videoDto.setId(video.getId());
+				return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.OK);			
 		}catch (Exception e) {
-			return new ResponseEntity<Video>(video, HttpStatus.BAD_REQUEST);		
+			return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.BAD_REQUEST);		
 		}			
 	}
 
-	public ResponseEntity<Video> atualizarVideo(Video video) {
+	public ResponseEntity<VideoDTO> atualizarVideo(VideoDTO videoDto) {
 		try {
-				Video videoParaUpdate = videoRepository.findById(video.getId()).get();
-				videoParaUpdate = video;
-				return new ResponseEntity<Video>(videoParaUpdate, HttpStatus.OK);
-		}		
+				Video video = videoRepository.findById(videoDto.getId()).get();
+				video.setId(videoDto.getId());
+				video.setDescricao(videoDto.getDescricao());
+				video.setTitulo(videoDto.getTitulo());
+				video.setUrl(videoDto.getUrl());
+				videoRepository.save(video);
+				return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.OK);
+		}
 		catch(Exception e) {
-				return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<VideoDTO>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	public ResponseEntity<String> deletarVideo(Long id) {
 		try {
 				videoRepository.deleteById(id);
-				return new ResponseEntity<String>("video excluído com sucesso!", HttpStatus.OK);
+				return new ResponseEntity<String>("Vídeo excluído com sucesso!", HttpStatus.OK);
 		    }	
 		catch(Exception e) {
-				return new ResponseEntity<String>("Não concluído: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("Não concluído: " + e.getMessage(), HttpStatus.NOT_FOUND);
 			 }	
-		}
 	}
-
-
+}
