@@ -3,24 +3,25 @@ package com.aluraflix.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import com.aluraflix.dto.VideoDTO;
 import com.aluraflix.models.Video;
 import com.aluraflix.repository.VideoRepository;
 
 @Service
-public class VideoService {
+public class VideoDTOService {
 	
 	@Autowired
 	private VideoRepository videoRepository;
 	
-	public ResponseEntity<List<Video>> buscarTodosOsVideos(){
-		return new ResponseEntity<List<Video>>(videoRepository.findAll(), HttpStatus.OK);				
+	public ResponseEntity<List<VideoDTO>> buscarTodosOsVideos(){
+		List<Video> lista = videoRepository.findAll();
+		if(!lista.isEmpty())
+			return new ResponseEntity<List<VideoDTO>>(new VideoDTO().converteListaParaVideoDTO(lista),  HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);			
 	}
 	
 	public ResponseEntity<VideoDTO> buscaVideoPorId(Long id) {
@@ -40,7 +41,7 @@ public class VideoService {
 				videoDto.setId(video.getId());
 				return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.OK);			
 		}catch (Exception e) {
-			return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.BAD_REQUEST);		
+				return new ResponseEntity<VideoDTO>(videoDto, HttpStatus.BAD_REQUEST);		
 		}			
 	}
 
@@ -66,6 +67,6 @@ public class VideoService {
 		    }	
 		catch(Exception e) {
 				return new ResponseEntity<String>("Não concluído: " + e.getMessage(), HttpStatus.NOT_FOUND);
-			 }	
+		 }	
 	}
 }

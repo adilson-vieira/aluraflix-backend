@@ -15,18 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aluraflix.dto.VideoDTO;
-import com.aluraflix.models.Video;
-import com.aluraflix.service.VideoService;
+import com.aluraflix.service.VideoDTOService;
 
 @RestController
 @RequestMapping("videos")
-public class VideoController {
+public class VideoDTOController {
 	
 	@Autowired
-	VideoService videoService;
+	VideoDTOService videoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Video>> buscarTodosOsVideos() {
+	public ResponseEntity<List<VideoDTO>> buscarTodosOsVideos() {
 		return videoService.buscarTodosOsVideos();		
 	}
 	

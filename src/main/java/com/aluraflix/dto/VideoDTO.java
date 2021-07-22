@@ -1,8 +1,12 @@
 package com.aluraflix.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.aluraflix.models.Video;
 
 public class VideoDTO {
 	
@@ -17,11 +21,19 @@ public class VideoDTO {
 	private String descricao;
 	
 	@NotBlank(message = "a url do video deve ser informada")
+	//@Pattern(regexp = "")
 	@Size(max = 300)
 	private String url;
 	
 	public VideoDTO() {
 	
+	}
+	
+	public VideoDTO(Video video) {
+		this.Id = video.getId();
+		this.titulo = video.getTitulo();
+		this.descricao = video.getDescricao();
+		this.url = video.getUrl();
 	}
 	
 	public VideoDTO(@NotBlank @Size(max = 255) String titulo, @NotBlank @Size(max = 255) String descricao,
@@ -63,7 +75,8 @@ public class VideoDTO {
 		this.url = url;
 	}
 	
+	public List<VideoDTO> converteListaParaVideoDTO(List<Video> lista) {
+		return lista.stream().map(VideoDTO::new).collect(Collectors.toList());
+	}
 	
-	
-
 }
