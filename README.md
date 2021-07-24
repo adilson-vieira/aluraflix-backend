@@ -1,12 +1,13 @@
 # #aluraflix-backend
-Desenvolvimento de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021.
+Desenvolvimento de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021. A proposta do projeto é primeira versão de uma plataforma para compartilhamento de vídeos.
 
 # Requisitos
-Utilize openJDK versão 11 com o framework spring boot versão 2.5.2 e com o banco de dados mariadb versão 15.1.
+O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 2.5.2 e banco de dados mariadb versão 15.1.
 
 # Projeto e Descrição da API
 
-**1) Baixe o projeto a partir deste repositório.**
+**1) Baixe o projeto a partir deste repositório.** <br />
+Importe o projeto para o ambiente de desenvolvimento (IDE) de sua preferência. As dependências serão satisfeitas conforme declaradas no arquivo de projeto [pom](https://github.com/adilson-vieira/aluraflix-backend/blob/main/pom.xml).
 
 **2) Crie o banco de dados no mariadb.**
 
