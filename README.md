@@ -1,5 +1,5 @@
 # #aluraflix-backend
-Desenvolvendo de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021.
+Desenvolvimento de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021.
 
 # Requisitos
 Utilize openJDK versão 11 com o framework spring boot versão 2.5.2 e com o banco de dados mariadb versão 15.1.
@@ -22,6 +22,8 @@ Altere as informações de usuário e senha do arquivo [application.properties](
 
 **3) Populando o banco com alguns vídeos:**
 
+No prompt do mariadb digite a sequência de comandos abaixo. Esses registros podem servir para apresentação da API bem como para os testes.
+
 `INSERT INTO videos(titulo, descricao, url) VALUES("Como Funcionam Os Emuladores com Fábio Akita","descrição do video aqui", "https://www.youtube.com/watch?v=9qx7qjKhJ1Q");`
 
 `INSERT INTO videos(titulo, descricao, url) VALUES("O que é Data Science?","descrição do video aqui", "https://www.youtube.com/watch?v=5b9Z8toVaAU");`
@@ -38,11 +40,23 @@ Altere as informações de usuário e senha do arquivo [application.properties](
 
 **`GET /videos/{id}`**    busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
 
-**`POST /videos`**     utiliza um json com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Ex: 
+**`POST /videos`**     utiliza um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Exemplo do `json`: 
 <br />`{` <br />
-          &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "Cursos de Programação e Negócios Digitais",` <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "video de teste do post",`   
-          &nbsp;&nbsp;&nbsp;&nbsp;`"url": "https://www.youtube.com/watch?v=TC5qfpL4RkU"`     
+          &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "título do novo vídeo",` <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "descrição do novo vídeo",`   
+          &nbsp;&nbsp;&nbsp;&nbsp;`"url": "https://www.youtube.com/watch?v=code_here"`     
 `}` <br />
 
 **`DELETE /videos/{id}`** exclui um determinado vídeo informando o id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário.
+
+**`PUT /videos/{id}`**     utiliza um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário. Exemplo do `json`: 
+<br />`{` <br />
+          &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "novo título do vídeo",` <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "nova descrição do vídeo",`   
+          &nbsp;&nbsp;&nbsp;&nbsp;`"url": "https://www.youtube.com/watch?v=code_here"`     
+`}` <br />
+
+**4) Testes**
+
+Os testes das requisições foram executados utilizando o [Postman](https://www.postman.com).
+
