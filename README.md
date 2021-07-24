@@ -37,20 +37,20 @@ No prompt do mariadb digite a sequência de comandos abaixo. Esses registros pod
 
 **3) Descrição da API:**
 
-**`GET  /videos`**     lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
+**`GET  /videos`**     Lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
 
-**`GET /videos/{id}`**    busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
+**`GET /videos/{id}`**    Busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
 
-**`POST /videos`**     utiliza um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Exemplo do `json`: 
+**`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Exemplo do `json`: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "título do novo vídeo",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "descrição do novo vídeo",`   
           &nbsp;&nbsp;&nbsp;&nbsp;`"url": "https://www.youtube.com/watch?v=code_here"`     
 `}` <br />
 
-**`DELETE /videos/{id}`** exclui um determinado vídeo informando o id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário.
+**`DELETE /videos/{id}`**   Exclui um determinado vídeo informando o id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário.
 
-**`PUT /videos/{id}`**     utiliza um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário. Exemplo do `json`: 
+**`PUT /videos/{id}`**    Atualiza um vídeo e utiliza um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário. Exemplo do `json`: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "novo título do vídeo",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "nova descrição do vídeo",`   
