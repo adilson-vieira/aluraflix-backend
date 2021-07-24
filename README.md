@@ -1,5 +1,5 @@
 # #aluraflix-backend
-Desenvolvimento de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021. A proposta do projeto é primeira versão de uma plataforma para compartilhamento de vídeos.
+Desenvolvimento de uma API RESTFull para o evento *Alura Challenge Back-end* em julho/agosto de 2021. A proposta do projeto é o desenvolvimento da primeira versão de uma plataforma para compartilhamento de vídeos.
 
 # Requisitos
 O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 2.5.2 e banco de dados mariadb versão 15.1.
@@ -7,7 +7,10 @@ O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 
 # Projeto e Descrição da API
 
 **1) Baixe o projeto a partir deste repositório.** <br />
-Importe o projeto para o ambiente de desenvolvimento (IDE) de sua preferência. As dependências serão satisfeitas conforme declaradas no arquivo de projeto [pom](https://github.com/adilson-vieira/aluraflix-backend/blob/main/pom.xml).
+No shell do linux, digite o comando: <br />
+`$ git clone https://github.com/adilson-vieira/aluraflix-backend.git`
+
+Importe o projeto para o ambiente de desenvolvimento (IDE) de sua preferência. As dependências serão satisfeitas conforme declaradas no arquivo de projeto [pom](https://github.com/adilson-vieira/aluraflix-backend/blob/main/pom.xml) após a importação.
 
 **2) Crie o banco de dados no mariadb.**
 
@@ -39,7 +42,7 @@ No prompt do mariadb digite a sequência de comandos abaixo. Esses registros pod
 
 **`GET  /videos`**     Lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
 
-**`GET /videos/{id}`**    Busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
+**`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
 
 **`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Exemplo do `json`: 
 <br />`{` <br />
