@@ -1,5 +1,5 @@
 # #aluraflix-backend
-Desenvolvimento de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021.
+Desenvolvendo de uma API RESTFull para o evento Alura Challenge Back-end em julho/agosto de 2021.
 
 # Requisitos
 Utilize openJDK versão 11 com o framework spring boot versão 2.5.2 e com o banco de dados mariadb versão 15.1.
@@ -34,16 +34,15 @@ Altere as informações de usuário e senha do arquivo [application.properties](
 
 **3) Descrição da API:**
 
-**`GET  /videos`**     lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`
+**`GET  /videos`**     lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
 
-**`GET /videos/{id}`**    busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário
+**`GET /videos/{id}`**    busca um determinado vídeo por seu id.Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
 
-**`POST /videos`**     utiliza um json com `titulo`, `descricao` e `url` como payload de body. Ex: 
+**`POST /videos`**     utiliza um json com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Ex: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "Cursos de Programação e Negócios Digitais",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "video de teste do post",`   
           &nbsp;&nbsp;&nbsp;&nbsp;`"url": "https://www.youtube.com/watch?v=TC5qfpL4RkU"`     
 `}` <br />
-Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário
 
-**`DELETE /videos/{id}`** exclui um determinado vídeo informando o id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário
+**`DELETE /videos/{id}`** exclui um determinado vídeo informando o id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404` caso contrário.
