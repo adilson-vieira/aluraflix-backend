@@ -17,15 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.aluraflix.dto.VideoDTO;
-import com.aluraflix.service.VideoDTOService;
+import com.aluraflix.controller.dto.VideoDto;
+import com.aluraflix.controller.form.VideoForm;
+import com.aluraflix.service.VideoService;
 
 @RestController
 @RequestMapping("videos")
-public class VideoDTOController {
+public class VideoController {
 	
 	@Autowired
-	VideoDTOService videoService;
+	VideoService videoService;
 	
 	@GetMapping("pagina") /* busca por paginacao */
 	public ResponseEntity<Page> buscarTodosOsVideos(@RequestParam(required = true) Integer pagina,
@@ -34,27 +35,26 @@ public class VideoDTOController {
 	}
 	
 	@GetMapping /* busca sem paginacao */
-	public ResponseEntity<List<VideoDTO>> buscarTodosOsVideos() {
+	public ResponseEntity<List<VideoDto>> buscarTodosOsVideos() {
 		return videoService.buscarTodosOsVideos();		
 	}
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<VideoDTO> buscarPorID(@PathVariable("id") Long id) {
+	public ResponseEntity<VideoDto> buscarPorID(@PathVariable("id") Long id) {
 		return videoService.buscaVideoPorId(id);		
 	}
 	
 	@PostMapping
-	public ResponseEntity<VideoDTO> cadastrarVideo(@RequestBody @Validated VideoDTO video,
+	public ResponseEntity<VideoDto> cadastrarVideo(@RequestBody @Validated VideoForm video,
 													UriComponentsBuilder uriBuilder) {
 		return videoService.cadastrarVideo(video, uriBuilder);				
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<VideoDTO> atualizarVideo(@PathVariable(required=true) long id, 
-												   @RequestBody @Validated VideoDTO video,
+	public ResponseEntity<VideoDto> atualizarVideo(@PathVariable(required=true) Long id, 
+												   @RequestBody @Validated VideoForm videoForm,
 												   UriComponentsBuilder uriBuilder) {
-		 video.setId(id);	
-		 return videoService.atualizarVideo(video, uriBuilder);
+		 return videoService.atualizarVideo(id, videoForm, uriBuilder);
 	}
 	
 	@DeleteMapping("/{id}")

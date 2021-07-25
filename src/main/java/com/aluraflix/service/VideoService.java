@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -12,16 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.aluraflix.dto.VideoDTO;
-import com.aluraflix.models.Video;
+import com.aluraflix.controller.dto.VideoDto;
+import com.aluraflix.controller.form.VideoForm;
+import com.aluraflix.model.Video;
 import com.aluraflix.repository.VideoRepository;
 
 @Service
-public class VideoDTOService {
+public class VideoService {
 	
 	private VideoRepository videoRepository;
 	
-	public VideoDTOService(VideoRepository videoRepository) {
+	public VideoService(VideoRepository videoRepository) {
 		this.videoRepository = videoRepository;
 	}
 	
@@ -29,44 +29,46 @@ public class VideoDTOService {
 		PageRequest paginacao = PageRequest.of(pagina, qtd);	
 		Page<Video> lista = videoRepository.findAll(paginacao);
 		if(!lista.isEmpty())
-			return ResponseEntity.ok().body(new VideoDTO().converteParaPaginaVideoDTO(lista));
+			return ResponseEntity.ok().body(new VideoDto().converteParaPaginaVideoDTO(lista));
 		return ResponseEntity.notFound().build();
 	}
 						
-	public ResponseEntity<List<VideoDTO>> buscarTodosOsVideos(){	
+	public ResponseEntity<List<VideoDto>> buscarTodosOsVideos(){	
 		List<Video> lista = videoRepository.findAll();
 		if(!lista.isEmpty()) 
-			return ResponseEntity.ok(new VideoDTO().converteListaParaVideoDTO(lista));
+			return ResponseEntity.ok(new VideoDto().converteListaParaVideoDTO(lista));
 		return ResponseEntity.noContent().build();				
 	}
 	
-	public ResponseEntity buscaVideoPorId(Long id) {
+	public ResponseEntity<VideoDto> buscaVideoPorId(Long id) {
 		Optional<Video> video = videoRepository.findById(id);
 		if(video.isEmpty())
 			return ResponseEntity.notFound().build();
-		VideoDTO videoBuscado = new VideoDTO(video.get().getTitulo(), video.get().getTitulo(), video.get().getUrl());
+		VideoDto videoBuscado = new VideoDto(video.get());
 		videoBuscado.setId(id);
 		return ResponseEntity.ok().body(videoBuscado);
 	}
 
-	public ResponseEntity<VideoDTO> cadastrarVideo(VideoDTO videoDto, UriComponentsBuilder uriBuilder) {
-		Video video = new Video(videoDto.getTitulo(), videoDto.getDescricao(), videoDto.getUrl());
+	public ResponseEntity<VideoDto> cadastrarVideo(VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+		Video video = new Video(videoForm.getTitulo(), videoForm.getDescricao(), videoForm.getUrl());
 		videoRepository.save(video);
+		VideoDto videoDto = new VideoDto(video);
 		videoDto.setId(video.getId());
 		
 		URI uri = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
 		return ResponseEntity.created(uri).body(videoDto);	
 	}
 
-	public ResponseEntity<VideoDTO> atualizarVideo(VideoDTO videoDto, UriComponentsBuilder uriBuilder) {
-		Optional<Video> video = videoRepository.findById(videoDto.getId());
+	public ResponseEntity<VideoDto> atualizarVideo(Long id, VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+		Optional<Video> video = videoRepository.findById(id);
 		if(video.isEmpty()) 
 			return ResponseEntity.notFound().build();		
-		video.get().setDescricao(videoDto.getDescricao());
-		video.get().setTitulo(videoDto.getTitulo());
-		video.get().setUrl(videoDto.getUrl());
-		videoRepository.save(video.get());		
-	    return ResponseEntity.ok(videoDto);
+		video.get().setDescricao(videoForm.getDescricao());
+		video.get().setTitulo(videoForm.getTitulo());
+		video.get().setUrl(videoForm.getUrl());
+		videoRepository.save(video.get());
+		VideoDto videoDto = new VideoDto(video.get());
+		return ResponseEntity.ok(videoDto);
 	}
 
 	public ResponseEntity<String> deletarVideo(Long id) {

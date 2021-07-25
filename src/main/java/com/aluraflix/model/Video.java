@@ -1,4 +1,4 @@
-package com.aluraflix.models;
+package com.aluraflix.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
