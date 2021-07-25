@@ -19,8 +19,11 @@ import com.aluraflix.repository.VideoRepository;
 @Service
 public class VideoDTOService {
 	
-	@Autowired
 	private VideoRepository videoRepository;
+	
+	public VideoDTOService(VideoRepository videoRepository) {
+		this.videoRepository = videoRepository;
+	}
 	
 	public ResponseEntity<Page> buscarTodosOsVideosPorPaginacao(Integer pagina, Integer qtd){
 		PageRequest paginacao = PageRequest.of(pagina, qtd);	
@@ -32,9 +35,8 @@ public class VideoDTOService {
 						
 	public ResponseEntity<List<VideoDTO>> buscarTodosOsVideos(){	
 		List<Video> lista = videoRepository.findAll();
-		if(!lista.isEmpty()) {
+		if(!lista.isEmpty()) 
 			return ResponseEntity.ok(new VideoDTO().converteListaParaVideoDTO(lista));
-		}	
 		return ResponseEntity.noContent().build();				
 	}
 	
@@ -59,21 +61,19 @@ public class VideoDTOService {
 	public ResponseEntity<VideoDTO> atualizarVideo(VideoDTO videoDto, UriComponentsBuilder uriBuilder) {
 		Optional<Video> video = videoRepository.findById(videoDto.getId());
 		if(video.isEmpty()) 
-			return ResponseEntity.notFound().build();
-		
+			return ResponseEntity.notFound().build();		
 		video.get().setDescricao(videoDto.getDescricao());
 		video.get().setTitulo(videoDto.getTitulo());
 		video.get().setUrl(videoDto.getUrl());
-		videoRepository.save(video.get());
-		
+		videoRepository.save(video.get());		
 	    return ResponseEntity.ok(videoDto);
 	}
 
 	public ResponseEntity<String> deletarVideo(Long id) {
 		return videoRepository.findById(id)
         .map(video -> {
-            videoRepository.deleteById(id);
-            return ResponseEntity.ok().body("vídeo excluído com sucesso do BD!");
+				            videoRepository.deleteById(id);
+				            return ResponseEntity.ok().body("vídeo excluído com sucesso do BD!");
         }).orElse(new ResponseEntity<String>("vídeo não existe no BD!", HttpStatus.NOT_FOUND));
 	}
 }
