@@ -7,6 +7,7 @@ O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 
 # Projeto e Descrição da API
 
 **1) Baixe o projeto a partir deste repositório.** <br />
+
 No shell do linux, digite o comando: <br />
 `$ git clone https://github.com/adilson-vieira/aluraflix-backend.git`
 
@@ -22,7 +23,7 @@ No shell do linux, digite os comandos:
 `Database changed` <br />
 `MariaDB [aluraflix]>`
 
-Altere as informações de usuário e senha do arquivo [application.properties](https://github.com/adilson-vieira/aluraflix-backend/blob/main/src/main/resources/application.properties).
+Altere as informações de usuário, senha, nome da base de dados no arquivo [application.properties](https://github.com/adilson-vieira/aluraflix-backend/blob/main/src/main/resources/application.properties) se necessário.
 
 **3) Populando o banco com alguns vídeos:**
 
@@ -42,9 +43,9 @@ No prompt do mariadb digite a sequência de comandos abaixo. Esses registros pod
 
 **`GET  /videos`**     Lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
 
-**`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso contrário.
+**`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso não encontrado.
 
-**`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 400` caso contrário. Exemplo do `json`: 
+**`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 201` caso contrário. Exemplo do `json`: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "título do novo vídeo",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "descrição do novo vídeo",`   
