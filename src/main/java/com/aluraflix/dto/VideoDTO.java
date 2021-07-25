@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.domain.Page;
+
 import com.aluraflix.models.Video;
 
 public class VideoDTO {
@@ -77,6 +79,10 @@ public class VideoDTO {
 	
 	public List<VideoDTO> converteListaParaVideoDTO(List<Video> lista) {
 		return lista.stream().map(VideoDTO::new).collect(Collectors.toList());
+	}
+
+	public Page<VideoDTO> converteParaPaginaVideoDTO(Page<Video> lista) {
+		return lista.map(VideoDTO::new);
 	}
 	
 }

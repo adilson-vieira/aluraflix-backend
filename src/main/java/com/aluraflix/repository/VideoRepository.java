@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.aluraflix.models.Video;
 
 @Repository
-public interface VideoRepository extends JpaRepository<Video, Long>{
-	
+public interface VideoRepository extends JpaRepository<Video, Long>{	
 
 }
