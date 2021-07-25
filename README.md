@@ -41,11 +41,13 @@ No prompt do mariadb digite a sequência de comandos abaixo. Esses registros pod
 
 **3) Descrição da API:**
 
-**`GET  /videos`**     Lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204`.
+**`GET  /videos`**     Lista todos os vídeos ou retorna a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204` se alista está vazia.
+
+**`GET  /videos/pagina?pagina=_ &qtd=_`**     Lista os vídeos por paginacão e retorna a página com a quantidade de vídeos de acordo com os valores dos parâmetros `pagina` e `qtd` ou retorna a página com a lista vazia. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204` se a lista está vazia.
 
 **`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso não encontrado.
 
-**`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 201` caso contrário. Exemplo do `json`: 
+**`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 201` se a requição obteve sucesso. Exemplo do `json`: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "título do novo vídeo",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"descricao": "descrição do novo vídeo",`   
