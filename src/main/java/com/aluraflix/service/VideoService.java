@@ -96,4 +96,16 @@ public class VideoService {
         })
         .orElse(new ResponseEntity<String>("vídeo não existe no BD!", HttpStatus.NOT_FOUND));
 	}
+	
+	public ResponseEntity<List<VideoDto>> buscarVideoPorTitulo(String chave){
+		if(!chave.isEmpty()) {
+			chave = '%' + chave + '%';
+			System.out.println(chave);
+			List<Video> lista = videoRepository.findByTituloLike(chave);
+			if(lista.isEmpty())
+				return ResponseEntity.noContent().build();
+			return ResponseEntity.ok(new VideoDto().converteListaParaVideoDTO(lista));
+		}	
+		return ResponseEntity.badRequest().build();
+	}
 }

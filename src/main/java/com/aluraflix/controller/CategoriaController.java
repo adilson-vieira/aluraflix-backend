@@ -59,7 +59,5 @@ public class CategoriaController {
 	@GetMapping("{id}/videos")
 	public ResponseEntity buscarVideosPorCategoria(@PathVariable(required = true) Long id){
 		 return categoriaService.buscarVideosPorCategoria(id);		
-	}
-	
-	
+	}	
 }

@@ -57,8 +57,8 @@ public class VideoController {
 		 return videoService.atualizarVideo(id, videoForm, uriBuilder);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletarVideo(@PathVariable("id") Long id) {
-		return videoService.deletarVideo(id);		
+	@GetMapping("/")
+	public ResponseEntity<List<VideoDto>> buscarVideoPorTitulo(@RequestParam(name = "search") String search) {
+		return videoService.buscarVideoPorTitulo(search);
 	}
 }
