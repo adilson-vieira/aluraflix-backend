@@ -1,27 +1,35 @@
 package com.aluraflix.controller.form;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class VideoForm {
 
+	@NotNull @Size(max = 255)
 	@NotBlank(message = "o título do vídeo deve ser informado")
-	@Size(max = 255)
 	private String titulo;
 	
+	@NotNull @Size(max = 255)
 	@NotBlank(message = "a descrição do vídeo deve ser informada")
-	@Size(max = 255)
 	private String descricao;
-	
+    
+	@NotNull @Size(max = 300)
 	@NotBlank(message = "a url do video deve ser informada")
 	//@Pattern(regexp = "")
-	@Size(max = 300)
 	private String url;
 	
-	public VideoForm(String titulo, String descricao, String url) {
+	private Long categoriaId;
+	
+	public VideoForm(String titulo, String descricao, String url, Long id) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.url = url;
+		if(id == null)
+			this.categoriaId = 1L;
+		else this.categoriaId = id;
 	}
 
 	public String getTitulo() {
@@ -46,6 +54,14 @@ public class VideoForm {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public void setCategoriaId(Long categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+	
+	public Optional<Long> getCategoriaId() {
+	    return Optional.ofNullable(categoriaId);	    	   
 	}
 	
 }

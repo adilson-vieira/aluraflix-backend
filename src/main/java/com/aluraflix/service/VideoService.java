@@ -13,16 +13,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aluraflix.controller.dto.VideoDto;
 import com.aluraflix.controller.form.VideoForm;
+import com.aluraflix.model.Categoria;
 import com.aluraflix.model.Video;
+import com.aluraflix.repository.CategoriaRepository;
 import com.aluraflix.repository.VideoRepository;
 
 @Service
 public class VideoService {
 	
 	private VideoRepository videoRepository;
+	CategoriaRepository categoriaRepository;
 	
-	public VideoService(VideoRepository videoRepository) {
+	public VideoService(VideoRepository videoRepository, CategoriaRepository categoriaRepository) {
 		this.videoRepository = videoRepository;
+		this.categoriaRepository = categoriaRepository;
 	}
 	
 	public ResponseEntity<Page> buscarTodosOsVideosPorPaginacao(Integer pagina, Integer qtd){
@@ -45,30 +49,43 @@ public class VideoService {
 		if(video.isEmpty())
 			return ResponseEntity.notFound().build();
 		VideoDto videoBuscado = new VideoDto(video.get());
-		videoBuscado.setId(id);
 		return ResponseEntity.ok().body(videoBuscado);
 	}
 
-	public ResponseEntity<VideoDto> cadastrarVideo(VideoForm videoForm, UriComponentsBuilder uriBuilder) {
-		Video video = new Video(videoForm.getTitulo(), videoForm.getDescricao(), videoForm.getUrl());
-		videoRepository.save(video);
-		VideoDto videoDto = new VideoDto(video);
-		videoDto.setId(video.getId());
-		
-		URI uri = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
-		return ResponseEntity.created(uri).body(videoDto);	
+	public ResponseEntity cadastrarVideo(VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+		if(videoForm.getCategoriaId() == null) {
+			videoForm.setCategoriaId(1L);
+		}
+		Long id = (Long) videoForm.getCategoriaId().get(); 
+		Optional optional = categoriaRepository.findById(id);
+		if(optional.isPresent()) {
+			Categoria categoria = (Categoria) optional.get(); 
+			Video video = new Video(videoForm.getTitulo(), videoForm.getDescricao(), 
+									videoForm.getUrl(), categoria);
+			videoRepository.save(video);
+			VideoDto videoDto = new VideoDto(video);					
+			URI uri = uriBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();
+			return ResponseEntity.created(uri).body(videoDto);	
+		}
+		return new ResponseEntity<String>("categoria informada não existe no BD!", HttpStatus.BAD_REQUEST);
 	}
 
-	public ResponseEntity<VideoDto> atualizarVideo(Long id, VideoForm videoForm, UriComponentsBuilder uriBuilder) {
-		Optional<Video> video = videoRepository.findById(id);
-		if(video.isEmpty()) 
-			return ResponseEntity.notFound().build();		
-		video.get().setDescricao(videoForm.getDescricao());
-		video.get().setTitulo(videoForm.getTitulo());
-		video.get().setUrl(videoForm.getUrl());
-		videoRepository.save(video.get());
-		VideoDto videoDto = new VideoDto(video.get());
-		return ResponseEntity.ok(videoDto);
+	public ResponseEntity atualizarVideo(Long id, VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+		Optional<Video> optVideo = videoRepository.findById(id);
+		if(optVideo.isEmpty()) 
+			return ResponseEntity.notFound().build();
+		Video video = (Video) optVideo.get();
+		Optional<Categoria> optCategoria = categoriaRepository.findById(videoForm.getCategoriaId().get());
+		if(optCategoria.isEmpty())
+			return ResponseEntity.badRequest().body(videoForm);
+		Categoria categoria = (Categoria)optCategoria.get();
+		video.setDescricao(videoForm.getDescricao());
+		video.setTitulo(videoForm.getTitulo());
+		video.setUrl(videoForm.getUrl());
+		video.setCategoria(categoria);
+		videoRepository.save(video);
+		VideoDto videoDto = new VideoDto(video);
+		return ResponseEntity.ok(videoDto);	
 	}
 
 	public ResponseEntity<String> deletarVideo(Long id) {
@@ -76,6 +93,7 @@ public class VideoService {
         .map(video -> {
 				            videoRepository.deleteById(id);
 				            return ResponseEntity.ok().body("vídeo excluído com sucesso do BD!");
-        }).orElse(new ResponseEntity<String>("vídeo não existe no BD!", HttpStatus.NOT_FOUND));
+        })
+        .orElse(new ResponseEntity<String>("vídeo não existe no BD!", HttpStatus.NOT_FOUND));
 	}
 }
