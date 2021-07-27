@@ -22,7 +22,7 @@ import com.aluraflix.repository.VideoRepository;
 public class VideoService {
 	
 	private VideoRepository videoRepository;
-	CategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository;
 	
 	public VideoService(VideoRepository videoRepository, CategoriaRepository categoriaRepository) {
 		this.videoRepository = videoRepository;
