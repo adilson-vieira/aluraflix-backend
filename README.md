@@ -18,8 +18,8 @@ Importe o projeto para o ambiente de desenvolvimento (IDE) de sua preferência. 
 No shell do linux, digite os comandos:
 
 `$ mariadb -u root -p    // abre o prompt do mariadb` <br />
-`MariaDB [(none)]> create datebase aluraflix   // cria a base de dados "aluraflix" ` <br />
-`MariaDB [(none)]> use aluraflix  // muda para base de dados recém criada ` <br />
+`MariaDB [(none)]> create database aluraflix;   // cria a base de dados "aluraflix" ` <br />
+`MariaDB [(none)]> use aluraflix;  // muda para base de dados recém criada ` <br />
 `Database changed` <br />
 `MariaDB [aluraflix]>`
 
