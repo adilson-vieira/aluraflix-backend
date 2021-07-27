@@ -27,7 +27,7 @@ Altere as informações de usuário, senha, nome da base de dados no arquivo [ap
 
 **3) Populando o banco com alguns vídeos para testes:**
 
-*Esse tópico é opcional. Caso queira, utilize as funcionalidades disponíveis na API conforme o tópico 3.*
+*Esse tópico é opcional. Caso queira, utilize as funcionalidades disponíveis na API conforme o tópico 4.*
 
 No prompt do mariadb digite a sequência de comandos abaixo. Esses registros podem servir para apresentação da API bem como para os testes.
 
@@ -48,7 +48,7 @@ Tabela de categorias:
 Por convenção o `id =  1` possui o atributo `titulo = "LIVRE"`. Insira novas categorias com o comando:
 `INSERT INTO categorias(titulo, cor) VALUES("nome_da_categoria", "#cor_em_hexadecimal")`
 
-**3) Descrição da API:** 
+**4) Descrição da API:** 
 
 Videos:
 
@@ -84,7 +84,7 @@ Categorias:
 **`DELETE  /categorias/{id}`** <br />
 
 
-**4) Testes**
+**5) Testes**
 
 Os testes das requisições foram executados utilizando o [Postman](https://www.postman.com).
 
