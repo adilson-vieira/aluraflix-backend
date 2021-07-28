@@ -62,6 +62,8 @@ Videos:
 
 **`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 404`caso não encontrado.
 
+**`GET  /videos/?search=_`**     Pesquisa o valor informado em `search` nos títulos dos vídeos e retorna uma lista com as correspondências dos vídeos ou retorna a lista vazia caso não encontrada alguma correspondência. Retorna um `http status code 200` se a requição obteve sucesso ou `http status code 204` se alista está vazia.
+
 **`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 201` se a requição obteve sucesso. Exemplo do `json`: 
 <br />`{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"titulo": "título do novo vídeo",` <br />
