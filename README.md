@@ -1,5 +1,5 @@
 # #aluraflix-backend
-Desenvolvimento de uma API RESTFull para o evento *Alura Challenge Back-end* em julho/agosto de 2021. A proposta do projeto é o desenvolvimento da primeira versão de uma plataforma para compartilhamento de vídeos. 
+Desenvolvimento de uma API REST para o evento *Alura Challenge Back-end* em julho/agosto de 2021. A proposta do projeto é o desenvolvimento da primeira versão de uma plataforma para compartilhamento de vídeos. 
 <br />
 
 *Importante: você também encontrará as classes de usuários e lista de filmes por usuário que são features que não fazem parte da semana 1 e 2 do desafio mas que estão em implementação. As features que já estão disponíveis e funcionais estão descritas no tópico 4. O projeto não depende dessas features nesse momento e pode ser executado sem problemas.*
