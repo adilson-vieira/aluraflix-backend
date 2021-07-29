@@ -36,9 +36,9 @@ Tabela de videos:
 
 `INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("Como Funcionam Os Emuladores com Fábio Akita","descrição do video aqui", "https://www.youtube.com/watch?v=9qx7qjKhJ1Q", 1);`
 
-`INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("O que é Data Science?","descrição do video aqui", "https://www.youtube.com/watch?v=5b9Z8toVaAU", , 1);`
+`INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("O que é Data Science?","descrição do video aqui", "https://www.youtube.com/watch?v=5b9Z8toVaAU", 1);`
 
-`INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("O que é SQL e NoSQL?","descrição do video aqui", "https://www.youtube.com/watch?v=aure5d3B88g", , 1);`
+`INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("O que é SQL e NoSQL?","descrição do video aqui", "https://www.youtube.com/watch?v=aure5d3B88g", 1);`
 
 `INSERT INTO videos(titulo, descricao, url, categoria_id) VALUES("O que é o C#?","descrição do video aqui", "https://www.youtube.com/watch?v=yj0FR_gm0sM", 1);`
 
