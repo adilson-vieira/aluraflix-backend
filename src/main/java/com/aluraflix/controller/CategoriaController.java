@@ -26,42 +26,41 @@ import com.aluraflix.service.CategoriaService;
 @RequestMapping("categorias")
 @CrossOrigin
 public class CategoriaController {
-	
+
 	@Autowired
 	CategoriaService categoriaService;
-	
-	@GetMapping 
-	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(@RequestParam(required = true, defaultValue = "0") 
-																	   Integer pagina,
-																	  @RequestParam(required = true, defaultValue = "10")
-	                                                                   Integer qtd ) {
-		return categoriaService.buscarTodasAsCategorias(pagina, qtd);		
+
+	@GetMapping
+	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(
+			@RequestParam(required = true, defaultValue = "0") Integer pagina,
+			@RequestParam(required = true, defaultValue = "10") Integer qtd) {
+		return categoriaService.buscarTodasAsCategorias(pagina, qtd);
 	}
-	
+
 	@RequestMapping("/{id}")
 	public ResponseEntity<?> buscarPorID(@PathVariable("id") Long id) {
-		return categoriaService.buscarCategoriaPorId(id);		
+		return categoriaService.buscarCategoriaPorId(id);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<CategoriaDto> cadastrarCategoria(@RequestBody @Validated CategoriaForm categoria,
-													UriComponentsBuilder uriBuilder) {
-		return categoriaService.cadastrarCategoria(categoria, uriBuilder);				
+			UriComponentsBuilder uriBuilder) {
+		return categoriaService.cadastrarCategoria(categoria, uriBuilder);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDto> atualizarCategoria(@PathVariable(required=true) Long id, 
-												   @RequestBody @Validated CategoriaForm CategoriaForm) {
-		 return categoriaService.atualizarCategoria(id, CategoriaForm);
+	public ResponseEntity<CategoriaDto> atualizarCategoria(@PathVariable(required = true) Long id,
+			@RequestBody @Validated CategoriaForm CategoriaForm) {
+		return categoriaService.atualizarCategoria(id, CategoriaForm);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletarCategoria(@PathVariable("id") Long id) {
-		return categoriaService.deletarCategoria(id);		
+		return categoriaService.deletarCategoria(id);
 	}
-	
+
 	@GetMapping("{id}/videos")
-	public ResponseEntity<List<VideoDto>> buscarVideosPorCategoria(@PathVariable(required = true) Long id){
-		 return categoriaService.buscarVideosPorCategoria(id);		
-	}	
+	public ResponseEntity<List<VideoDto>> buscarVideosPorCategoria(@PathVariable(required = true) Long id) {
+		return categoriaService.buscarVideosPorCategoria(id);
+	}
 }

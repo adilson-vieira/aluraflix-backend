@@ -21,38 +21,36 @@ import com.aluraflix.controller.dto.VideoDto;
 import com.aluraflix.controller.form.VideoForm;
 import com.aluraflix.service.VideoService;
 
-
 @RestController
 @RequestMapping("videos")
 @CrossOrigin
 public class VideoController {
-	
+
 	@Autowired
 	VideoService videoService;
-	
+
 	@GetMapping
 	public ResponseEntity<Page> buscarTodosOsVideos(@RequestParam(required = true, defaultValue = "0") Integer pagina,
-													@RequestParam(required = true, defaultValue = "5") Integer qtd) {
-		return videoService.buscarTodosOsVideosPorPaginacao(pagina, qtd);			
+			@RequestParam(required = true, defaultValue = "5") Integer qtd) {
+		return videoService.buscarTodosOsVideosPorPaginacao(pagina, qtd);
 	}
-		
+
 	@RequestMapping("/{id}")
 	public ResponseEntity<VideoDto> buscarPorID(@PathVariable("id") Long id) {
-		return videoService.buscaVideoPorId(id);		
+		return videoService.buscaVideoPorId(id);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> cadastrarVideo(@RequestBody @Validated VideoForm video,
-													UriComponentsBuilder uriBuilder) {
-		return videoService.cadastrarVideo(video, uriBuilder);				
+	public ResponseEntity<?> cadastrarVideo(@RequestBody @Validated VideoForm video, UriComponentsBuilder uriBuilder) {
+		return videoService.cadastrarVideo(video, uriBuilder);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizarVideo(@PathVariable(required=true) Long id, 
-											@RequestBody @Validated VideoForm videoForm) {
-		 return videoService.atualizarVideo(id, videoForm);
+	public ResponseEntity<?> atualizarVideo(@PathVariable(required = true) Long id,
+			@RequestBody @Validated VideoForm videoForm) {
+		return videoService.atualizarVideo(id, videoForm);
 	}
-	
+
 	@GetMapping("/")
 	public ResponseEntity<List<VideoDto>> buscarVideoPorTitulo(@RequestParam(name = "search") String search) {
 		return videoService.buscarVideoPorTitulo(search);
