@@ -86,7 +86,7 @@ Categorias:
 **`PUT  /categorias/{id}`** <br />
 **`DELETE  /categorias/{id}`** <br />
 
-Relatorios:
+Relatorios: <br />
 **`GET /categorias/relatorios`** <br />
 
 **5) Testes**
