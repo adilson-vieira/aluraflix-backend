@@ -23,13 +23,13 @@ public class VideoForm {
 	
 	private Long categoriaId;
 	
-	public VideoForm(String titulo, String descricao, String url, Long id) {
+	public VideoForm(String titulo, String descricao, String url, Long categoriaId) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.url = url;
-		if(id == null)
+		if(categoriaId == null)
 			this.categoriaId = 1L;
-		else this.categoriaId = id;
+		else this.categoriaId = categoriaId;
 	}
 
 	public String getTitulo() {

@@ -24,5 +24,15 @@ public class CategoriaForm {
 
 	public String getCor() {
 		return cor;
-	}	
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+	
+	
 }

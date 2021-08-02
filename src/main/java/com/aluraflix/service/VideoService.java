@@ -34,16 +34,9 @@ public class VideoService {
 		Page<Video> lista = videoRepository.findAll(paginacao);
 		if(!lista.isEmpty())
 			return ResponseEntity.ok().body(new VideoDto().converteParaPaginaVideoDTO(lista));
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.noContent().build();
 	}
-						
-	public ResponseEntity<List<VideoDto>> buscarTodosOsVideos(){	
-		List<Video> lista = videoRepository.findAll();
-		if(!lista.isEmpty()) 
-			return ResponseEntity.ok(new VideoDto().converteListaParaVideoDTO(lista));
-		return ResponseEntity.noContent().build();				
-	}
-	
+			
 	public ResponseEntity<VideoDto> buscaVideoPorId(Long id) {
 		Optional<Video> video = videoRepository.findById(id);
 		if(video.isEmpty())
@@ -52,10 +45,7 @@ public class VideoService {
 		return ResponseEntity.ok().body(videoBuscado);
 	}
 
-	public ResponseEntity cadastrarVideo(VideoForm videoForm, UriComponentsBuilder uriBuilder) {
-		if(videoForm.getCategoriaId() == null) {
-			videoForm.setCategoriaId(1L);
-		}
+	public ResponseEntity<?> cadastrarVideo(VideoForm videoForm, UriComponentsBuilder uriBuilder) {
 		Long id = (Long) videoForm.getCategoriaId().get(); 
 		Optional optional = categoriaRepository.findById(id);
 		if(optional.isPresent()) {
@@ -70,7 +60,7 @@ public class VideoService {
 		return new ResponseEntity<String>("categoria informada não existe no BD!", HttpStatus.BAD_REQUEST);
 	}
 
-	public ResponseEntity atualizarVideo(Long id, VideoForm videoForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<?> atualizarVideo(Long id, VideoForm videoForm, UriComponentsBuilder uriBuilder) {
 		Optional<Video> optVideo = videoRepository.findById(id);
 		if(optVideo.isEmpty()) 
 			return ResponseEntity.notFound().build();
@@ -103,7 +93,7 @@ public class VideoService {
 			System.out.println(chave);
 			List<Video> lista = videoRepository.findByTituloLike(chave);
 			if(lista.isEmpty())
-				return ResponseEntity.noContent().build();
+				return ResponseEntity.notFound().build();
 			return ResponseEntity.ok(new VideoDto().converteListaParaVideoDTO(lista));
 		}	
 		return ResponseEntity.badRequest().build();

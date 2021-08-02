@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -22,26 +24,29 @@ import com.aluraflix.service.CategoriaService;
 
 @RestController
 @RequestMapping("categorias")
-
+@CrossOrigin
 public class CategoriaController {
 	
 	@Autowired
 	CategoriaService categoriaService;
 	
 	@GetMapping 
-	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias() {
-		return categoriaService.buscarTodasAsCategorias();		
+	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(@RequestParam(required = true, defaultValue = "0") 
+																	   Integer pagina,
+																	  @RequestParam(required = true, defaultValue = "10")
+	                                                                   Integer qtd ) {
+		return categoriaService.buscarTodasAsCategorias(pagina, qtd);		
 	}
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<CategoriaDto> buscarPorID(@PathVariable("id") Long id) {
+	public ResponseEntity<?> buscarPorID(@PathVariable("id") Long id) {
 		return categoriaService.buscarCategoriaPorId(id);		
 	}
 	
 	@PostMapping
-	public ResponseEntity<CategoriaDto> cadastrarCategoria(@RequestBody @Validated CategoriaForm Categoria,
+	public ResponseEntity<CategoriaDto> cadastrarCategoria(@RequestBody @Validated CategoriaForm categoria,
 													UriComponentsBuilder uriBuilder) {
-		return categoriaService.cadastrarCategoria(Categoria, uriBuilder);				
+		return categoriaService.cadastrarCategoria(categoria, uriBuilder);				
 	}
 	
 	@PutMapping("/{id}")
@@ -57,7 +62,7 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("{id}/videos")
-	public ResponseEntity buscarVideosPorCategoria(@PathVariable(required = true) Long id){
+	public ResponseEntity<List<VideoDto>> buscarVideosPorCategoria(@PathVariable(required = true) Long id){
 		 return categoriaService.buscarVideosPorCategoria(id);		
 	}	
 }

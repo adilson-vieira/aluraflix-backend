@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,14 +27,15 @@ public class CategoriaService {
 		this.categoriaRepository = categoriaRepository;
 	}	
 						
-	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(){	
-		List<Categoria> lista = categoriaRepository.findAll();
+	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(Integer pagina, Integer qtd ){	
+		PageRequest paginacao = PageRequest.of(pagina, qtd);
+		Page<Categoria> lista = categoriaRepository.findAll(paginacao);
 		if(!lista.isEmpty()) 
-			return ResponseEntity.ok(new CategoriaDto().converterListaParaCategoriaDTO(lista));
+			return ResponseEntity.ok(new CategoriaDto().converterListaParaCategoriaDTO(lista.getContent()));
 		return ResponseEntity.noContent().build();				
 	}
 	
-	public ResponseEntity buscarCategoriaPorId(Long id) {
+	public ResponseEntity<?> buscarCategoriaPorId(Long id) {
 		Optional<Categoria> categoria = categoriaRepository.findById(id);
 		if(categoria.isEmpty())
 			return new ResponseEntity<String>("categoria não existente no BD!", HttpStatus.NOT_FOUND);
@@ -72,7 +75,7 @@ public class CategoriaService {
 	public ResponseEntity<List<VideoDto>> buscarVideosPorCategoria(Long id) {
 		List<Video> lista = categoriaRepository.buscarVideosPorCategoria(id);
 		if(lista.isEmpty())
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok( new VideoDto().converteListaParaVideoDTO(lista));
 	}
 }
