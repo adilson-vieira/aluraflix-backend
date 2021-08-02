@@ -51,9 +51,8 @@ public class CategoriaController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDto> atualizarCategoria(@PathVariable(required=true) Long id, 
-												   @RequestBody @Validated CategoriaForm CategoriaForm,
-												   UriComponentsBuilder uriBuilder) {
-		 return categoriaService.atualizarCategoria(id, CategoriaForm, uriBuilder);
+												   @RequestBody @Validated CategoriaForm CategoriaForm) {
+		 return categoriaService.atualizarCategoria(id, CategoriaForm);
 	}
 	
 	@DeleteMapping("/{id}")

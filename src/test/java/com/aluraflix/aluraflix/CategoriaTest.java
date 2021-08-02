@@ -14,62 +14,56 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CategoriasTest {
-	
+public class CategoriaTest {
+
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@Test
 	void contextLoads() {
 	}
-	
+
 	@Test
-	public void buscarVideosPorCategoriaERetornarStatusCode200() throws Exception{
-		   URI uri = new URI("/categorias/1/videos");
-			mockMvc.perform(MockMvcRequestBuilders.get(uri)
-												  .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-												  .andExpect(MockMvcResultMatchers.status().is(200));
+	public void buscarVideosPorCategoriaERetornarStatusCode200() throws Exception {
+		URI uri = new URI("/categorias/1/videos");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().is(200));
 	}
-	
+
 	@Test
 	public void salvarNovaCategoriaERetornarStatusCode201() throws Exception {
 		String json = "{\"titulo\":\"TESTE DE CATEGORIA\", \"cor\":\"#FFCCAA\"}";
-	    URI uri = new URI("/categorias");
-		mockMvc.perform(MockMvcRequestBuilders.post(uri)
-											  .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-											  .content(json))
-										      .andExpect(MockMvcResultMatchers.status().is(201));		
+		URI uri = new URI("/categorias");
+		mockMvc.perform(MockMvcRequestBuilders.post(uri).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+				.content(json)).andExpect(MockMvcResultMatchers.status().is(201));
 	}
-	
+
 	@Test
 	public void alterarCategoriaERetornarStatusCode200() throws Exception {
 		String json = "{\"titulo\":\"TESTE DE CATEGORIA\", \"cor\":\"#FFCCAA\"}";
-        URI uri = new URI("/categorias/1");
-		mockMvc.perform(MockMvcRequestBuilders.put(uri)
-			   .content(json)
-			   .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-			   .andExpect(MockMvcResultMatchers.status().is(200));	
+		URI uri = new URI("/categorias/1");
+		mockMvc.perform(MockMvcRequestBuilders.put(uri).content(json).header(HttpHeaders.CONTENT_TYPE,
+				MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().is(200));
 	}
-	
-	@Test 
+
+	@Test
 	public void excluirCategoriaERetornarStatusCode200() throws Exception {
-		URI	uri = new URI("/categorias/7");
-		mockMvc.perform(MockMvcRequestBuilders.delete(uri))
-			   .andExpect(MockMvcResultMatchers.status().is(200));
-	}	
-	
+		URI uri = new URI("/categorias/11");
+		mockMvc.perform(MockMvcRequestBuilders.delete(uri)).andExpect(MockMvcResultMatchers.status().is(200));
+	}
+
 	@Test
 	public void listarTodasAsCategoriasERetornarStatusCode200() throws Exception {
 		URI uri = new URI("/categorias");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(MockMvcResultMatchers.status().is(200));		
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(MockMvcResultMatchers.status().is(200));
 	}
-	
+
 	@Test
 	public void buscarUmaCategoriaERetornarStatusCode200() throws Exception {
 		URI uri = new URI("/categorias/1");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(MockMvcResultMatchers.status().is(200));
 	}
-	
+
 	@Test
 	public void buscarUmaCategoriaERetornarStatusCode404() throws Exception {
 		URI uri = new URI("/categorias/1000");

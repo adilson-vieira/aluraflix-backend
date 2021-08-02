@@ -32,7 +32,7 @@ public class VideoController {
 	
 	@GetMapping
 	public ResponseEntity<Page> buscarTodosOsVideos(@RequestParam(required = true, defaultValue = "0") Integer pagina,
-													@RequestParam(required = true, defaultValue = "10") Integer qtd) {
+													@RequestParam(required = true, defaultValue = "5") Integer qtd) {
 		return videoService.buscarTodosOsVideosPorPaginacao(pagina, qtd);			
 	}
 		
@@ -49,9 +49,8 @@ public class VideoController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizarVideo(@PathVariable(required=true) Long id, 
-											@RequestBody @Validated VideoForm videoForm,
-												   UriComponentsBuilder uriBuilder) {
-		 return videoService.atualizarVideo(id, videoForm, uriBuilder);
+											@RequestBody @Validated VideoForm videoForm) {
+		 return videoService.atualizarVideo(id, videoForm);
 	}
 	
 	@GetMapping("/")

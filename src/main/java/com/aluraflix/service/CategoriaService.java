@@ -20,43 +20,44 @@ import com.aluraflix.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
-	
+
 	private CategoriaRepository categoriaRepository;
-	
+
 	public CategoriaService(CategoriaRepository categoriaRepository) {
 		this.categoriaRepository = categoriaRepository;
-	}	
-						
-	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(Integer pagina, Integer qtd ){	
+	}
+
+	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(Integer pagina, Integer qtd) {
 		PageRequest paginacao = PageRequest.of(pagina, qtd);
 		Page<Categoria> lista = categoriaRepository.findAll(paginacao);
-		if(!lista.isEmpty()) 
+		if (!lista.isEmpty())
 			return ResponseEntity.ok(new CategoriaDto().converterListaParaCategoriaDTO(lista.getContent()));
-		return ResponseEntity.noContent().build();				
+		return ResponseEntity.noContent().build();
 	}
-	
+
 	public ResponseEntity<?> buscarCategoriaPorId(Long id) {
 		Optional<Categoria> categoria = categoriaRepository.findById(id);
-		if(categoria.isEmpty())
+		if (categoria.isEmpty())
 			return new ResponseEntity<String>("categoria não existente no BD!", HttpStatus.NOT_FOUND);
 		CategoriaDto categoriaBuscada = new CategoriaDto(categoria.get());
 		return ResponseEntity.ok().body(categoriaBuscada);
 	}
 
-	public ResponseEntity<CategoriaDto> cadastrarCategoria(CategoriaForm categoriaForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<CategoriaDto> cadastrarCategoria(CategoriaForm categoriaForm,
+			UriComponentsBuilder uriBuilder) {
 		Categoria categoria = new Categoria(categoriaForm.getTitulo(), categoriaForm.getCor());
 		categoriaRepository.save(categoria);
 		CategoriaDto categoriaDto = new CategoriaDto(categoria);
-				
+
 		URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
-		return ResponseEntity.created(uri).body(categoriaDto);	
+		return ResponseEntity.created(uri).body(categoriaDto);
 	}
 
-	public ResponseEntity<CategoriaDto> atualizarCategoria(Long id, CategoriaForm categoriaForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<CategoriaDto> atualizarCategoria(Long id, CategoriaForm categoriaForm) {
 		Optional<Categoria> optional = categoriaRepository.findById(id);
-		if(optional.isEmpty()) 
+		if (optional.isEmpty())
 			return ResponseEntity.notFound().build();
-		Categoria categoria = (Categoria)optional.get(); 
+		Categoria categoria = (Categoria) optional.get();
 		categoria.setTitulo(categoriaForm.getTitulo());
 		categoria.setCor(categoriaForm.getCor());
 		categoriaRepository.save(categoria);
@@ -65,17 +66,16 @@ public class CategoriaService {
 	}
 
 	public ResponseEntity<String> deletarCategoria(Long id) {
-		return categoriaRepository.findById(id)
-        .map(categoria -> {
-				            categoriaRepository.deleteById(id);
-				            return ResponseEntity.ok().body("categoria excluída com sucesso do BD!");
-        }).orElse(new ResponseEntity<String>("categoria não existe no BD!", HttpStatus.NOT_FOUND));
+		return categoriaRepository.findById(id).map(categoria -> {
+			categoriaRepository.deleteById(id);
+			return ResponseEntity.ok().body("categoria excluída com sucesso do BD!");
+		}).orElse(new ResponseEntity<String>("categoria não existe no BD!", HttpStatus.NOT_FOUND));
 	}
 
 	public ResponseEntity<List<VideoDto>> buscarVideosPorCategoria(Long id) {
 		List<Video> lista = categoriaRepository.buscarVideosPorCategoria(id);
-		if(lista.isEmpty())
+		if (lista.isEmpty())
 			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok( new VideoDto().converteListaParaVideoDTO(lista));
+		return ResponseEntity.ok(new VideoDto().converteListaParaVideoDTO(lista));
 	}
 }
