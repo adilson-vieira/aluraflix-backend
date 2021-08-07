@@ -29,10 +29,10 @@ public class VideoController {
 	@Autowired
 	VideoService videoService;
 
-	@GetMapping
-	public ResponseEntity<Page> buscarTodosOsVideos(@RequestParam(required = true, defaultValue = "0") Integer pagina,
-			@RequestParam(required = true, defaultValue = "5") Integer qtd) {
-		return videoService.buscarTodosOsVideosPorPaginacao(pagina, qtd);
+	@GetMapping("/")
+	public ResponseEntity<Page> buscarTodosOsVideos(@RequestParam(required = true, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "5") Integer qtd) {
+		return videoService.buscarTodosOsVideosPorPaginacao(page, qtd);
 	}
 
 	@RequestMapping("/{id}")
@@ -51,8 +51,13 @@ public class VideoController {
 		return videoService.atualizarVideo(id, videoForm);
 	}
 
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<List<VideoDto>> buscarVideoPorTitulo(@RequestParam(name = "search") String search) {
 		return videoService.buscarVideoPorTitulo(search);
+	}
+	
+	@GetMapping("free")
+	public ResponseEntity<List<VideoDto>> buscarVideosFree() {
+		return videoService.listarVideosFree();
 	}
 }

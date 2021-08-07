@@ -95,4 +95,12 @@ public class VideoService {
 		}
 		return ResponseEntity.badRequest().build();
 	}
+	
+	public ResponseEntity<List<VideoDto>> listarVideosFree() {
+		final Byte quantidade = 5;
+		List<Video> lista = videoRepository.listarVideosFree(quantidade);
+		if(lista.isEmpty())
+			return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().body(new VideoDto().converteListaParaVideoDTO(lista));
+	}
 }

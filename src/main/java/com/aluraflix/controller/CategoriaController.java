@@ -32,9 +32,9 @@ public class CategoriaController {
 
 	@GetMapping
 	public ResponseEntity<List<CategoriaDto>> buscarTodasAsCategorias(
-			@RequestParam(required = true, defaultValue = "0") Integer pagina,
-			@RequestParam(required = true, defaultValue = "10") Integer qtd) {
-		return categoriaService.buscarTodasAsCategorias(pagina, qtd);
+			@RequestParam(required = true, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "5") Integer qtd) {
+		return categoriaService.buscarTodasAsCategorias(page, qtd);
 	}
 
 	@RequestMapping("/{id}")
