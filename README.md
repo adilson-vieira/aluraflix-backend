@@ -3,7 +3,7 @@ Desenvolvimento de uma API REST para o evento *Alura Challenge Back-end* em julh
 <br />
 
 # Requisitos
-O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 2.5.2 e banco de dados mariadb versão 15.1.
+O projeto utiliza maven, openJDK versão 11 com o framework spring boot versão 2.5.2 e banco de dados mariadb versão 15.1. A autenticação é feita com o JWT versão 0.9.1.
 
 # Projeto e Descrição da API
 
@@ -28,12 +28,12 @@ Altere as informações de usuário, senha, nome da base de dados no arquivo [ap
 
 **3) Populando o banco com alguns vídeos para testes:**
 
-Para iniciar os testes é necessário criar um usuário inicial na aplicação. No prompt do MariaDB, digite: <br />
+Para poder utilizar a API é necessário criar pelo menos um usuário na aplicação. No prompt do MariaDB, digite: <br />
 `INSERT INTO usuarios(nome, email, senha) VALUES('usuario teste', 'usuario@email.com', '$2a$10$Z8OdeTS6NgbFpk/S5xcOS.iJwmW/T9nT0ihNT5eUCS7i.xD.NEh12');`
 
 Será criado um `usuario teste` com a senha `1234`. <br />
 
-A autenticação na API é feita através de **`POST  /videos/auth`** com seguinte `json` como payload de body:<br />
+A autenticação na API é feita através de **`POST  /videos/auth`** com o seguinte `json` no payload de body:<br />
 `{` <br />
           &nbsp;&nbsp;&nbsp;&nbsp; `"usuario": "usuario@email.com",` <br />
           &nbsp;&nbsp;&nbsp;&nbsp;`"senha": "1234"`          
