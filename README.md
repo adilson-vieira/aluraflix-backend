@@ -28,7 +28,18 @@ Altere as informações de usuário, senha, nome da base de dados no arquivo [ap
 
 **3) Populando o banco com alguns vídeos para testes:**
 
-*Esse tópico é opcional. Caso queira, utilize as funcionalidades disponíveis na API conforme o tópico 4.*
+Para iniciar os testes é necessário criar um usuário inicial na aplicação. No prompt do MariaDB, digite: <br />
+`INSERT INTO usuarios(nome, email, senha) VALUES('usuario teste', 'usuario@email.com', '$2a$10$Z8OdeTS6NgbFpk/S5xcOS.iJwmW/T9nT0ihNT5eUCS7i.xD.NEh12');`
+
+Será criado um `usuario teste` com a senha `1234`. <br />
+
+A autenticação na API é feita através de **`POST  /videos/auth`** com seguinte `json` como payload de body:<br />
+`{` <br />
+          &nbsp;&nbsp;&nbsp;&nbsp; `"usuario": "usuario@email.com",` <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;`"senha": "1234"`          
+`}` <br />
+
+*O restante deste tópico é opcional. Caso queira, utilize as funcionalidades disponíveis na API conforme o tópico 4.*
 
 No prompt do mariadb digite a sequência de comandos abaixo. Esses registros podem servir para apresentação da API bem como para os testes.
 
@@ -59,7 +70,7 @@ Videos:
 
 **`GET /videos/{id}`**    Busca um determinado vídeo por seu id. Retorna um `http status code 200` se a requisição obteve sucesso ou `http status code 404`caso não encontrado.
 
-**`GET  /videos/?search=_`**     Pesquisa o valor informado em `search` nos títulos dos vídeos e retorna uma lista com as correspondências dos vídeos ou retorna a lista vazia caso não encontrada alguma correspondência. Retorna um `http status code 200` se a requisição obteve sucesso ou `http status code 204` se alista está vazia.
+**`GET  /videos/?search=_`**     Pesquisa o valor informado em `search` nos títulos dos vídeos e retorna uma lista com as correspondências dos vídeos ou retorna a lista vazia caso não encontrada alguma correspondência. Retorna um `http status code 200` se a requisição obteve sucesso ou `http status code 204` se a lista está vazia.
 
 **`POST /videos`**     Cadastra um `json` com `titulo`, `descricao` e `url` como payload de body. Retorna um `http status code 201` se a requisição obteve sucesso. Exemplo do `json`: 
 <br />`{` <br />
